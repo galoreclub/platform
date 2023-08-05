@@ -25,9 +25,11 @@ export const TextInput = ({ label, ...props }: InputProps) => {
       <input
         {...field}
         {...props}
-        className="border-[1px] border-border p-2 text-[8px] text-border"
+        className="border-[1px] border-border p-2 text-[12px] text-black md:text-xs lg:text-sm"
       />
-      {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+      {meta.touched && meta.error ? (
+        <div className="text-sm text-error">{meta.error}</div>
+      ) : null}
     </>
   )
 }

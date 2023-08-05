@@ -89,7 +89,7 @@ export const Header = (): React.ReactElement => {
           </nav>
         </div>
         <h1 className="flex flex-shrink-0 items-start justify-center justify-self-center object-contain lg:pb-4">
-          <a href="#">
+          <a href="/home">
             <img
               className="max-w-[130px] md:max-w-[160px]"
               src={logo}

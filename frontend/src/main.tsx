@@ -7,6 +7,7 @@ import ErrorPage from './pages/ErrorPage.tsx'
 import { Landing } from './pages/Landing.tsx'
 import { Home } from './pages/Home.tsx'
 import { SignInModal } from './components/SignInModal.tsx'
+import { PasswordReset } from './pages/PasswordReset.tsx'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             element: <SignInModal />,
           },
         ],
+      },
+      {
+        path: '/resetpassword',
+        element: <PasswordReset />,
       },
     ],
   },

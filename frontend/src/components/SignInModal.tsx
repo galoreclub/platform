@@ -28,7 +28,7 @@ export const SignInModal = () => {
             ></path>
           </svg>
         </button>
-        <SignInForm />
+        <SignInForm setModalOpen={() => setModalOpen(false)} />
       </div>
     </div>
   )

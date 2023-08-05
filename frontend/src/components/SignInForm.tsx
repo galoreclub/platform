@@ -1,8 +1,9 @@
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { TextInput } from './TextInput'
+import { PasswordInput } from './PasswordInput'
 
-export const SignInForm = () => {
+export const SignInForm = ({ setModalOpen }: any) => {
   return (
     <>
       <h1 className="text-md font-helvetica-bold uppercase">
@@ -26,28 +27,19 @@ export const SignInForm = () => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
+            setModalOpen()
           }, 400)
         }}
       >
         <Form className="mx-4 flex w-full flex-col gap-1 lg:px-10">
-          <TextInput
-            label="email"
-            name="email"
-            type="email"
-            placeholder="EMAIL"
-          />
-          <TextInput
-            label="email"
-            name="password"
-            type="password"
-            placeholder="PASSWORD"
-          />
+          <TextInput label="email" name="email" type="email" />
+          <PasswordInput label="password" name="password" />
           <div className="my-2 flex flex-row items-center justify-between text-xs">
             <label>
               <Field type="checkbox" name="remember" />
               <span className="ml-1">Remember Me</span>
             </label>
-            <a href="#">Forgot Password?</a>
+            <a href="/resetpassword">Forgot Password?</a>
           </div>
           <button
             type="submit"
