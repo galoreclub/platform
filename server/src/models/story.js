@@ -1,16 +1,33 @@
-const Joi = require('joi');
+const mongoose = require('./index')
 
-const storySchema = Joi.object({
-  // TODO Think of what to put as a PK (string)
-  PRIMARY_KEY: Joi.number().required(),
-  brand: Joi.string().required(),
-  size: Joi.string().required(),
-  serialNum: Joi.number().required(),
-  material: Joi.string(),
-  model: Joi.string(),
+const storySchema = new mongoose.Schema({
+  brand: {
+    type: String,
+    required: true,
+  },
+  size: {
+    type: String,
+    required: true,
+  },
+  serialNum: {
+    type: Number,
+    required: true,
+  },
+  material: {
+    type: String,
+  },
+  model: {
+    type: String,
+  },
   // TODO Add later on?
-  // userID: Joi.string(),
-  // photoUrl: Joi.array().items(Joi.string()),
+  // userID: {
+  //   type: String,
+  // },
+  // photoUrl: {
+  //   type: [String],
+  // },
 });
 
-module.exports = storySchema;
+const Story = mongoose.model('Story', storySchema);
+
+module.exports = Story;

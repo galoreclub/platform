@@ -1,10 +1,11 @@
-const AWS = require('aws-sdk');
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-AWS.config.update({
-  region: process.env.AWS_REGION, // replace with your desired region
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-});
+mongoose.connect(process.env.DB_URL, {
+  useNewUrlParser: true, //needed to prevent warning error
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Successfully connected to MongoDB'))
+.catch(error => console.error('Failed to connect to MongoDB', error));
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
-module.exports = dynamoDB;
+module.exports = mongoose;
