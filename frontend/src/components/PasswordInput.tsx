@@ -18,6 +18,7 @@ export const PasswordInput = ({ label, ...props }: InputProps) => {
 
   const handleToggle = (e: any) => {
     e.preventDefault()
+    e.stopPropagation()
     if (type === 'password') {
       setType('text')
     } else {
@@ -27,42 +28,41 @@ export const PasswordInput = ({ label, ...props }: InputProps) => {
 
   return (
     <>
-      <label
-        className="-m-1 h-1 w-1 overflow-hidden border-0 p-0"
-        htmlFor={props.id || props.name}
-      >
-        {label}
-      </label>
-      <div className="relative m-0 flex w-full flex-row items-center p-0">
-        <input
-          {...field}
-          {...props}
-          type={type}
-          className="w-full border-[1px] border-border p-2 text-[12px] text-black md:text-xs lg:text-sm"
-        />
-        <button
-          className="absolute right-0 mr-2 flex items-center justify-around"
-          onClick={handleToggle}
-        >
-          <span
-            className={`${
-              type === 'password' ? '' : 'hidden'
-            } material-symbols-outlined`}
+      <div className="flex flex-col">
+        <label className="mb-0 text-sm" htmlFor={props.id || props.name}>
+          {label}
+        </label>
+        <div className="relative m-0 flex w-full flex-row items-center p-0">
+          <input
+            {...field}
+            {...props}
+            type={type}
+            className="w-full border-[0.4px] border-border/50 p-2 text-[12px] text-black md:text-xs lg:text-sm"
+          />
+          <div
+            className="absolute right-0 mr-2 flex cursor-pointer items-center justify-around"
+            onClick={handleToggle}
           >
-            visibility
-          </span>
-          <span
-            className={`${
-              type === 'text' ? '' : 'hidden'
-            } material-symbols-outlined`}
-          >
-            visibility_off
-          </span>
-        </button>
+            <span
+              className={`${
+                type === 'password' ? '' : 'hidden'
+              } material-symbols-outlined`}
+            >
+              visibility
+            </span>
+            <span
+              className={`${
+                type === 'text' ? '' : 'hidden'
+              } material-symbols-outlined`}
+            >
+              visibility_off
+            </span>
+          </div>
+        </div>
+        {meta.touched && meta.error ? (
+          <div className="text-sm text-error">{meta.error}</div>
+        ) : null}
       </div>
-      {meta.touched && meta.error ? (
-        <div className="text-sm text-error">{meta.error}</div>
-      ) : null}
     </>
   )
 }

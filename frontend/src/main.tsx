@@ -6,7 +6,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ErrorPage from './pages/ErrorPage.tsx'
 import { Landing } from './pages/Landing.tsx'
 import { Home } from './pages/Home.tsx'
-import { SignInModal } from './components/SignInModal.tsx'
 import { PasswordReset } from './pages/PasswordReset.tsx'
 
 const router = createBrowserRouter([
@@ -22,12 +21,6 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home />,
-        children: [
-          {
-            path: '/home/signin',
-            element: <SignInModal />,
-          },
-        ],
       },
       {
         path: '/resetpassword',

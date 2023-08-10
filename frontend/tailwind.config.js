@@ -1,11 +1,8 @@
-import plugin from 'tailwindcss/plugin';
+import plugin from 'tailwindcss/plugin'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     colors: {
       white: '#FFFFFF',
@@ -28,7 +25,7 @@ export default {
       helvetica: 'Helvetica, sans-serif',
       'helvetica-bold': 'Helvetica-Bold, sans-serif',
       seasons: 'TheSeasons, serif',
-      tenor: 'Tenor Sans, sans-serif'
+      tenor: 'Tenor Sans, sans-serif',
     },
     extend: {
       textShadow: {
@@ -47,18 +44,17 @@ export default {
           '90%, 100%': { transform: 'translateY(-420px)' },
         },
         wordScroll: {
-          '0%, 25%': { transform: 'translateY(0)'},
-          '26%, 50%': { transform: 'translateY(-25%)'},
-          '51%, 75%': { transform: 'translateY(-50%)'},
-          '76%, 100%': { transform: 'translateY(-75%)'},
-        }
-      
+          '0%, 25%': { transform: 'translateY(0)' },
+          '26%, 50%': { transform: 'translateY(-25%)' },
+          '51%, 75%': { transform: 'translateY(-50%)' },
+          '76%, 100%': { transform: 'translateY(-75%)' },
+        },
       },
       animation: {
         scrollUp: 'scrollUp 7s ease-in-out infinite',
-        'spin-slow': 'spin 8s linear infinite',
-        wordScroll: 'wordScroll 6s linear infinite'
-      }
+        'spin-slow': 'spin 16s linear infinite',
+        wordScroll: 'wordScroll 6s linear infinite',
+      },
     },
   },
   plugins: [
@@ -74,4 +70,3 @@ export default {
     }),
   ],
 }
-

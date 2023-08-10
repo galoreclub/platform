@@ -16,20 +16,19 @@ export const TextInput = ({ label, ...props }: InputProps) => {
 
   return (
     <>
-      <label
-        className="-m-1 h-1 w-1 overflow-hidden border-0 p-0"
-        htmlFor={props.id || props.name}
-      >
-        {label}
-      </label>
-      <input
-        {...field}
-        {...props}
-        className="border-[1px] border-border p-2 text-[12px] text-black md:text-xs lg:text-sm"
-      />
-      {meta.touched && meta.error ? (
-        <div className="text-sm text-error">{meta.error}</div>
-      ) : null}
+      <div className="flex flex-col">
+        <label className="mb-0 text-sm" htmlFor={props.id || props.name}>
+          {label}
+        </label>
+        <input
+          {...field}
+          {...props}
+          className="border-[0.4px] border-border/50 p-2 text-[12px] text-black md:text-xs lg:text-sm"
+        />
+        {meta.touched && meta.error ? (
+          <div className="text-sm text-error">{meta.error}</div>
+        ) : null}
+      </div>
     </>
   )
 }

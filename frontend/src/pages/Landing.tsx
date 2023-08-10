@@ -10,8 +10,8 @@ export const Landing = (): React.ReactElement => {
       <IntroSection />
       <LoopSection />
       <a
-        href="#"
-        className="font-Inter m-auto cursor-pointer bg-black px-20 py-4 text-lg font-extralight uppercase text-white no-underline hover:bg-btn-hover "
+        href="/home"
+        className="m-auto cursor-pointer bg-black px-20 py-4 text-lg font-extralight uppercase text-white no-underline hover:bg-btn-hover "
       >
         join the loop
       </a>
