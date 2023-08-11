@@ -1,7 +1,7 @@
 {
   "name": "platform",
   "version": "1.0.0",
-  "description": "- This is Glore Platform.",
+  "description": "Galore Platform",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
