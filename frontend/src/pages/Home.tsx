@@ -3,7 +3,7 @@ import { IntroSection } from '../components/IntroSection'
 import homeImg1 from '../assets/home-1.png'
 import homeImg2 from '../assets/home-2.png'
 import homeImg3 from '../assets/home-3.png'
-import { AuthModal } from '../components/AuthModal/AuthModal'
+import { AuthModal } from '../features/auth/AuthModal'
 
 export const Home = (): React.ReactElement => {
   return (

@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
-import { TextInput } from '../TextInput'
-import { PasswordInput } from '../PasswordInput'
+import { TextInput } from '../../components/TextInput'
+import { PasswordInput } from '../../components/PasswordInput'
 
 export const RegisterForm = ({ toggle, setNewUser }: any) => {
   return (

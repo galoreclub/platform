@@ -3,7 +3,7 @@ import { HowSection } from '../components/HowSection'
 import { IntroSection } from '../components/IntroSection'
 import { LoopSection } from '../components/LoopSection'
 
-export const Landing = (): React.ReactElement => {
+export const Landing = () => {
   return (
     <>
       <HeroSection />

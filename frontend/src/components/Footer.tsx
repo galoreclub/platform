@@ -1,6 +1,6 @@
 export const Footer = (): React.ReactElement => {
   return (
-    <footer className="flex flex-row flex-wrap justify-between gap-4 p-6 md:p-20 mt-2 uppercase text-sm md:text-base">
+    <footer className="mt-2 flex flex-row flex-wrap justify-between gap-4 p-6 text-sm uppercase md:p-20 md:text-base">
       <div className="flex flex-col gap-2">
         <h4 className="font-['Helvetica-Bold']">about</h4>
         <a href="/pages/about-us">who we are</a>
