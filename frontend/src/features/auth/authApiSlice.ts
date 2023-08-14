@@ -1,13 +1,40 @@
-import { apiSlice } from '../app/api/apiSlice'
+import { apiSlice } from '../../app/api/apiSlice'
 
-// Path: platform/frontend/src/features/auth/authSlice.ts
+export const authApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (credentials) => ({
+        url: 'auth/login/',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    register: builder.mutation({
+      query: (credentials) => ({
+        url: 'auth/register/',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: 'auth/logout/',
+        method: 'POST',
+      }),
+    }),
+    refresh: builder.mutation({
+      query: () => ({
+        url: 'auth/refresh/',
+        method: 'POST',
+      }),
+    }),
+  }),
+  overrideExisting: false,
+})
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-export interface AuthState {
-  token: string | null
-  isAuthenticated: boolean
-
-  isLoading: boolean
-  user: any
-}
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+  useRefreshMutation,
+} = authApiSlice

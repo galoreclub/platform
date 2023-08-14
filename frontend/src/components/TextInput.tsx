@@ -17,7 +17,10 @@ export const TextInput = ({ label, ...props }: InputProps) => {
   return (
     <>
       <div className="flex flex-col">
-        <label className="mb-0 text-sm" htmlFor={props.id || props.name}>
+        <label
+          className="mb-0 font-helvetica-bold text-sm"
+          htmlFor={props.id || props.name}
+        >
           {label}
         </label>
         <input

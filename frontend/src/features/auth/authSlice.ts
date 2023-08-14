@@ -1,16 +1,22 @@
-// create a slice of state for the auth state (authSlice.ts)
-// Path: platform/frontend/src/features/auth/authSlice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface AuthState {
   token: string | null
-  user: any
+  user: User | null
 }
 
 const initialState: AuthState = {
   token: localStorage.getItem('token'),
   user: null,
+}
+
+export interface User {
+  id: number
+  email: string
+  phone?: string
+  firstName?: string
+  lastName?: string
+  acceptsMarketing?: boolean
 }
 
 const authSlice = createSlice({
@@ -38,6 +44,3 @@ const authSlice = createSlice({
 export const { authSuccess, authFail, authLogout } = authSlice.actions
 
 export default authSlice.reducer
-
-export const selectCurrentUser = (state: any) => state.auth.user
-export const selectCurrentToken = (state: any) => state.auth.token

@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.1",
     "@reduxjs/toolkit": "^1.9.5",
+    "@shopify/hydrogen-react": "^2023.7.1",
+    "dompurify": "^3.0.5",
     "formik": "^2.4.3",
+    "graphql": "^16.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
@@ -19,6 +23,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.2",
     "@types/node": "^20.4.10",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",

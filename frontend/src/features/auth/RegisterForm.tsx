@@ -2,8 +2,20 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { TextInput } from '../../components/TextInput'
 import { PasswordInput } from '../../components/PasswordInput'
+import { useMutation } from '@apollo/client'
+import { CREATE_CUSTOMER } from '../../app/graphql/mutations'
 
 export const RegisterForm = ({ toggle, setNewUser }: any) => {
+  const [submitForm, { data, loading, error }] = useMutation(CREATE_CUSTOMER)
+
+  if (error) {
+    console.log(error.message)
+  }
+
+  if (data) {
+    console.log(data)
+  }
+
   return (
     <>
       <div className="m-auto flex w-10/12 flex-col items-center justify-center gap-4 bg-white p-6 md:w-6/12 lg:w-4/12 lg:p-10">
@@ -57,7 +69,7 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
             email: '',
             password: '',
             passwordConfirmation: '',
-            signUp: false,
+            acceptsMarketing: false,
           }}
           validationSchema={Yup.object({
             email: Yup.string()
@@ -80,11 +92,13 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
             ),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
-              setSubmitting(false)
-              toggle()
-            }, 400)
+            // destructure form submission values to exclude pwd confirmation (not accepted by storefront api)
+            const { passwordConfirmation, ...input } = values
+            submitForm({
+              variables: { input: { ...input } },
+            })
+            setSubmitting(false)
+            toggle()
           }}
         >
           <Form className="mx-4 flex w-full flex-col gap-4 lg:px-10">
@@ -102,7 +116,7 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
             />
             <div className="my-2 flex flex-row items-center justify-start text-xs">
               <label>
-                <Field type="checkbox" name="signUp" />
+                <Field type="checkbox" name="acceptsMarketing" />
                 <span className="ml-1">
                   Sign up to receive our monthly news letter, updates on new
                   arrivals, promotions and more!

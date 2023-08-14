@@ -1,9 +1,22 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { authFail, authSuccess } from './authSlice'
+import { useLoginMutation } from './authApiSlice'
+import {
+  isErrorWithMessage,
+  isFetchBaseQueryError,
+} from '../../services/helpers'
+import { useAppDispatch } from '../../app/hooks'
 
 export const SignInForm = ({ toggle, setNewUser }: any) => {
   const [type, setType] = useState('password')
+  const emailRef = useRef<HTMLInputElement>(null)
+  const errRef = useRef<HTMLDivElement>(null)
+  const [errMsg, setErrMsg] = useState('')
+
+  const [login, { isLoading }] = useLoginMutation()
+  const dispatch = useAppDispatch()
 
   const handleToggle = (e: any) => {
     e.preventDefault()
@@ -13,6 +26,15 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
     } else {
       setType('password')
     }
+  }
+
+  useEffect(() => {
+    emailRef.current?.focus()
+    console.log(process.env.VITE_PUBLIC_STOREFRONT_TOKEN)
+  }, [])
+
+  if (isLoading) {
+    return <>Loading...</>
   }
 
   return (
@@ -52,11 +74,26 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
               .max(20, 'Must be 20 characters or less.')
               .required('This field is required.'),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
-              setSubmitting(false)
+          onSubmit={async (credentials, { setSubmitting }) => {
+            try {
+              const userData = await login(credentials).unwrap()
+              dispatch(authSuccess(userData))
               toggle()
+            } catch (err) {
+              if (isFetchBaseQueryError(err)) {
+                const errMsg =
+                  'error' in err ? err.error : JSON.stringify(err.data)
+                setErrMsg(errMsg)
+              } else if (isErrorWithMessage(err)) {
+                setErrMsg(err.message)
+              }
+              dispatch(authFail)
+              errRef.current?.focus()
+            }
+
+            setTimeout(() => {
+              alert(JSON.stringify(credentials, null, 2))
+              setSubmitting(false)
             }, 400)
           }}
         >
@@ -72,6 +109,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
               type="text"
               name="email"
               placeholder="EMAIL"
+              innerRef={emailRef}
             />
             <ErrorMessage
               className="text-xs text-error md:text-sm"
@@ -131,6 +169,15 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
             >
               log in
             </button>
+            <div
+              ref={errRef}
+              className={`${
+                errMsg ? 'block' : 'hidden'
+              } text-xs text-error md:text-sm`}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </div>
           </Form>
         </Formik>
         <div className="mt-2 flex w-full flex-row gap-4 lg:px-10">

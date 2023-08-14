@@ -1,9 +1,9 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { TextInput } from './TextInput'
-import { Dialog } from './Dialog'
+import { TextInput } from '../../components/TextInput'
+import { Dialog } from '../../components/Dialog'
 import { useState } from 'react'
-import { PasswordInput } from './PasswordInput'
+import { PasswordInput } from '../../components/PasswordInput'
 
 export const ResetForm = () => {
   const [showDialog, setShowDialog] = useState(false)
@@ -30,6 +30,10 @@ export const ResetForm = () => {
               'Must contain one special character.'
             )
             .required('This field is required.'),
+          passwordConfirmation: Yup.string().oneOf(
+            [Yup.ref('password')],
+            'Passwords must match'
+          ),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -39,15 +43,17 @@ export const ResetForm = () => {
           }, 400)
         }}
       >
-        <Form className="flex w-full flex-col gap-1 lg:px-10">
+        <Form className="flex w-full flex-col gap-2 lg:px-10">
           <h1 className="font-helvetica-bold text-lg uppercase">
             reset your password
           </h1>
           <p className="text-xs">*Indicates a required field</p>
-          <p className="font-helvetica-bold">*EMAIL</p>
-          <TextInput label="email" name="email" type="email" />
-          <p className="font-helvetica-bold">*PASSWORD</p>
-          <PasswordInput label="password" name="password" />
+          <TextInput label="*Email" name="email" type="email" />
+          <PasswordInput label="*Password" name="password" />
+          <PasswordInput
+            label="*Confirm Password"
+            name="passwordConfirmation"
+          />
           <p className="text-xs">
             Must be 10 or more characters and contain at least one uppercase
             letter, lowercase letter, number, and symbol.

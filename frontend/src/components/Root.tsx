@@ -1,10 +1,10 @@
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Outlet } from 'react-router-dom'
-import { useState } from 'react'
+import { useAppSelector } from '../app/hooks'
 
 const Root = (): React.ReactElement => {
-  const [user, setUser] = useState(true)
+  const user = useAppSelector((state) => state.auth.user)
 
   return (
     <>
