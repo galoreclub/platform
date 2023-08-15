@@ -1,33 +1,22 @@
-const mongoose = require('./index')
+import mongoose from 'mongoose';
 
-const storySchema = new mongoose.Schema({
-  brand: {
+const bagStorySchema = new mongoose.Schema({
+  shopify_user_id: {
     type: String,
     required: true,
   },
-  size: {
+  bag_id: {
     type: String,
     required: true,
   },
-  serialNum: {
-    type: Number,
+  action: {
+    type: String,
     required: true,
   },
-  material: {
-    type: String,
+  timestamp: {
+    type: Date,
   },
-  model: {
-    type: String,
-  },
-  // TODO Add later on?
-  // userID: {
-  //   type: String,
-  // },
-  // photoUrl: {
-  //   type: [String],
-  // },
+  // currentOwner?
 });
 
-const Story = mongoose.model('Story', storySchema);
-
-module.exports = Story;
+export default mongoose.model('BagStory', bagStorySchema);

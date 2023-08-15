@@ -1,14 +1,22 @@
-require('dotenv').config();
-const { PORT } = process.env;
-const express = require('express');
-const app = express();
-const router = require('./src/routers/router');
-app.use(express.json());
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import mongoose from 'mongoose';
+import executableSchema from './src/models/index.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello from Confirmation Story</h1>');
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true, //needed to prevent warning error
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('Successfully connected to MongoDB'))
+  .catch((error) => console.error('Failed to connect to MongoDB', error));
+
+const server = new ApolloServer({
+  typeDefs: executableSchema.typeDefs,
+  resolvers: executableSchema.resolvers,
 });
 
-app.use(router);
-
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+const { url } = await startStandaloneServer(server);
+console.log(`🚀 Server ready at ${url}`);
