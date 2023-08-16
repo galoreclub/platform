@@ -1,5 +1,4 @@
-import Bag from './bag.js';
-import BagStory from './story.js';
+import BagStory from './storyModel.js';
 import { GraphQLScalarType, Kind } from 'graphql';
 
 const dateScalar = new GraphQLScalarType({
@@ -19,18 +18,8 @@ const dateScalar = new GraphQLScalarType({
   },
 });
 
-const typeDefs = `
+const storyTypeDefs = `
   scalar Date
-
-  type Bag {
-    bag_id: String!
-    brand: String!
-    model: String!
-    size: String!
-    serialNum: Int!
-    material: String!
-    price: Float!
-  }
 
   type BagStory {
     shopify_user_id: String!
@@ -40,57 +29,22 @@ const typeDefs = `
   }
 
   type Query {
-    bags: [Bag]
     bagStory(shopify_user_id: String!): [BagStory]
   }
 
   type Mutation {
-    addBag(bag_id: String!, brand: String!, model: String!, size: String!, serialNum: Int!, material: String!, price: Float!): Bag
-    updateBag(bag_id: String!, brand: String!, model: String!, size: String!, serialNum: Int!, material: String!, price: Float!): Bag
-    deleteBag(bag_id: String!): Boolean
     addBagStory(shopify_user_id: String!, bag_id: String!, action: String!): BagStory
     updateBagStory(story_id: String!, action: String!): BagStory
     deleteBagStory(story_id: String!): Boolean
   }
 `;
 
-const resolvers = {
+const storyResolvers = {
   Date: dateScalar,
   Query: {
-    bags: () => Bag.find(),
     bagStory: (root, { shopify_user_id }) => BagStory.find({ shopify_user_id }),
   },
   Mutation: {
-    addBag: async (
-      _,
-      { bag_id, brand, model, size, serialNum, material, price }
-    ) => {
-      const newBag = new Bag({
-        bag_id,
-        brand,
-        model,
-        size,
-        serialNum,
-        material,
-        price,
-      });
-      await newBag.save();
-      return newBag;
-    },
-    updateBag: async (
-      _,
-      { bag_id, brand, model, size, serialNum, material, price }
-    ) => {
-      return Bag.findOneAndUpdate(
-        { bag_id },
-        { bag_id, brand, model, size, serialNum, material, price },
-        { new: true }
-      );
-    },
-    deleteBag: async (_, { bag_id }) => {
-      await Bag.findOneAndDelete({ bag_id });
-      return true;
-    },
     addBagStory: async (_, { shopify_user_id, bag_id, action }) => {
       const newEntry = new BagStory({
         shopify_user_id,
@@ -110,8 +64,4 @@ const resolvers = {
     },
   },
 };
-
-export default {
-  typeDefs,
-  resolvers,
-};
+export { storyTypeDefs, storyResolvers };
