@@ -8,8 +8,14 @@ const typeDefs = `
 `;
 
 const resolvers = {
-  ...bagResolvers,
-  ...storyResolvers,
+  Query: {
+    ...bagResolvers.Query,
+    ...storyResolvers.Query,
+  },
+  Mutation: {
+    ...bagResolvers.Mutation,
+    ...storyResolvers.Mutation,
+  },
 };
 
 export default {

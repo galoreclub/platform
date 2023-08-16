@@ -42,18 +42,23 @@ const storyTypeDefs = `
 const storyResolvers = {
   Date: dateScalar,
   Query: {
-    bagStory: (root, { shopify_user_id }) => BagStory.find({ shopify_user_id }),
+    bagStory: async (root, { shopify_user_id }) => BagStory.find({ shopify_user_id }),
   },
   Mutation: {
     addBagStory: async (_, { shopify_user_id, bag_id, action }) => {
-      const newEntry = new BagStory({
-        shopify_user_id,
-        bag_id,
-        action,
-        timestamp: new Date(),
-      });
-      await newEntry.save();
-      return newEntry;
+      try {
+        const newEntry = new BagStory({
+          shopify_user_id,
+          bag_id,
+          action,
+          timestamp: new Date(),
+        });
+        await newEntry.save();
+        return newEntry;
+      } catch (error) {
+        console.error('Error adding bag story:', error);
+        throw new Error('Failed to add bag story');
+      }
     },
     updateBagStory: async (_, { story_id, action }) => {
       return BagStory.findByIdAndUpdate(story_id, { action }, { new: true });

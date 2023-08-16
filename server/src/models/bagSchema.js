@@ -31,17 +31,22 @@ const bagResolvers = {
       _,
       { bag_id, brand, model, size, serialNum, material, price }
     ) => {
-      const newBag = new Bag({
-        bag_id,
-        brand,
-        model,
-        size,
-        serialNum,
-        material,
-        price,
-      });
-      await newBag.save();
-      return newBag;
+      try {
+        const newBag = new Bag({
+          bag_id,
+          brand,
+          model,
+          size,
+          serialNum,
+          material,
+          price,
+        });
+        await newBag.save();
+        return newBag;
+      } catch (error) {
+        console.error('Error adding bag:', error);
+        throw new Error('Failed to add bag');
+      }
     },
     updateBag: async (
       _,
