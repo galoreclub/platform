@@ -3,18 +3,28 @@ import * as Yup from 'yup'
 import { TextInput } from '../../components/TextInput'
 import { PasswordInput } from '../../components/PasswordInput'
 import { useMutation } from '@apollo/client'
-import { CREATE_CUSTOMER } from '../../app/graphql/mutations'
+import { CUSTOMER_CREATE } from '../../app/graphql/mutations'
+import { Dialog } from '../../components/Dialog'
+import { useEffect, useState } from 'react'
 
 export const RegisterForm = ({ toggle, setNewUser }: any) => {
-  const [submitForm, { data, loading, error }] = useMutation(CREATE_CUSTOMER)
+  const [submitForm, { data, loading, error }] = useMutation(CUSTOMER_CREATE)
+  const [showDialog, setShowDialog] = useState(false)
+  const [email, setEmail] = useState('')
+
+  if (loading) {
+    console.log('loading...')
+  }
 
   if (error) {
     console.log(error.message)
   }
 
-  if (data) {
-    console.log(data)
-  }
+  useEffect(() => {
+    if (data) {
+      setShowDialog(true)
+    }
+  }, [data])
 
   return (
     <>
@@ -94,11 +104,11 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
           onSubmit={(values, { setSubmitting }) => {
             // destructure form submission values to exclude pwd confirmation (not accepted by storefront api)
             const { passwordConfirmation, ...input } = values
+            setEmail(values.email)
             submitForm({
               variables: { input: { ...input } },
             })
             setSubmitting(false)
-            toggle()
           }}
         >
           <Form className="mx-4 flex w-full flex-col gap-4 lg:px-10">
@@ -141,6 +151,13 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
             </div>
           </Form>
         </Formik>
+        <Dialog
+          showDialog={showDialog}
+          setShowDialog={() => setShowDialog(false)}
+          message={`An activation email has been sent to ${
+            data ? email : 'your email address'
+          }. Please activate your account. If you do not receive an email, please check your spam folder.`}
+        />
       </div>
     </>
   )

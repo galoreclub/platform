@@ -69,7 +69,7 @@ export const ResetForm = () => {
       <Dialog
         showDialog={showDialog}
         setShowDialog={() => setShowDialog(false)}
-        message="your password has been changed"
+        message="Your password has been reset."
       />
     </>
   )

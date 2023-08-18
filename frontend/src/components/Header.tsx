@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import logo from '../assets/logo.png'
+import { Link } from 'react-router-dom'
 
 export const Header = (): React.ReactElement => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -46,97 +47,97 @@ export const Header = (): React.ReactElement => {
           <nav className="hidden uppercase lg:block" aria-label="desktop-menu">
             <ul className="flex flex-grow flex-row pb-2 text-sm font-light lg:gap-6 xl:gap-10">
               <li className="text-center">
-                <a
-                  href="#"
+                <Link
+                  to="/catalog"
                   className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   buy
-                </a>
+                </Link>
               </li>
               <li className="text-center">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   rent
-                </a>
+                </Link>
               </li>
               <li className="text-center">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   sell
-                </a>
+                </Link>
               </li>
               <li className="text-center">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   who we are
-                </a>
+                </Link>
               </li>
               <li className="text-center">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   how it works
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
         </div>
         <h1 className="flex flex-shrink-0 items-start justify-center justify-self-center object-contain lg:pb-4">
-          <a href="/home">
+          <Link to="/home">
             <img
               className="max-w-[130px] md:max-w-[160px]"
               src={logo}
               alt="logo"
             />
-          </a>
+          </Link>
         </h1>
         <div className="flex flex-1 justify-end">
           <nav id="util-menu" className="w-full uppercase" aria-label="main">
             <ul className="flex flex-grow flex-row justify-end gap-6 text-sm font-light xl:gap-10">
               <li className="hidden text-center lg:block">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   digital passport
-                </a>
+                </Link>
               </li>
               <li className="hidden text-center lg:block">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
                 >
                   sustainability
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#">
+                <Link to="#">
                   <span className="material-symbols-outlined">search</span>
-                </a>
+                </Link>
               </li>
               <li className="hidden sm:block">
-                <a href="#">
+                <Link to="#">
                   <span className="material-symbols-outlined">favorite</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#">
+                <Link to="#">
                   <span className="material-symbols-outlined">person</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#">
+                <Link to="#">
                   <span className="material-symbols-outlined">
                     shopping_cart
                   </span>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -154,60 +155,60 @@ export const Header = (): React.ReactElement => {
         >
           <ul className="m-0 flex flex-grow flex-col justify-start gap-4 p-0 text-lg font-light md:text-2xl">
             <li className="hover:bg-focused hover:text-white">
-              <a
-                href="#"
+              <Link
+                to="/catalog"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 buy
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 rent
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 sell
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 who we are
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 how it works
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 digital passport
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="#"
                 className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
               >
                 sustainability
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

@@ -66,7 +66,7 @@ export const ActivateForm = () => {
       <Dialog
         showDialog={showDialog}
         setShowDialog={() => setShowDialog(false)}
-        message="your password has been changed"
+        message="Your account has been successfully activated. Please log in."
       />
     </>
   )

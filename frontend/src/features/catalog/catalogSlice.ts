@@ -1,27 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CatalogState {
+  openMenus: any[]
   products: any[]
   vendors: any[]
-  sortKey: SortKey
-  vendorFilters: any[]
-  sizeFilters: any[]
-  colorFilters: any[]
-  priceFilters: any[]
+  productFilters: any[]
+  query: any[]
   loading: boolean
   error: any
 }
 
-type SortKey = 'TITLE' | 'CREATED_AT' | 'PRICE'
-
 const initialState: CatalogState = {
+  openMenus: [],
   products: [],
   vendors: [],
-  sortKey: 'TITLE',
-  vendorFilters: [],
-  sizeFilters: [],
-  colorFilters: [],
-  priceFilters: [],
+  productFilters: [],
+  query: [],
   loading: false,
   error: null,
 }
@@ -36,24 +30,35 @@ const catalogSlice = createSlice({
     loadVendors: (state, action: PayloadAction<any>) => {
       state.vendors = action.payload
     },
-    addVendorFilter: (state, action: PayloadAction<any>) => {
-      state.vendorFilters.push(action.payload)
+    addFilter: (state, action: PayloadAction<any>) => {
+      state.productFilters.push(action.payload.value)
     },
-    removeVendorFilter: (state, action: PayloadAction<any>) => {
-      state.vendorFilters.filter((filter) => filter !== action.payload)
+    removeFilter: (state, action: PayloadAction<any>) => {
+      state.productFilters = state.productFilters.filter(
+        (filter) => filter !== action.payload.value
+      )
     },
-    addSizeFilter: (state, action: PayloadAction<any>) => {
-      state.sizeFilters.push(action.payload)
-    },
-    addColorFilter: (state, action: PayloadAction<any>) => {
-      state.colorFilters.push(action.payload)
-    },
-    addPriceFilter: (state, action: PayloadAction<any>) => {
-      state.priceFilters.push(action.payload)
+    toggleMenu: (state, action: PayloadAction<any>) => {
+      if (state.openMenus.includes(action.payload)) {
+        state.openMenus = state.openMenus.filter(
+          (menu) => menu !== action.payload
+        )
+      } else {
+        state.openMenus.push(action.payload)
+        state.openMenus = state.openMenus.filter(
+          (menu) => menu == action.payload
+        )
+      }
     },
   },
 })
 
-export const { loadProducts, loadVendors } = catalogSlice.actions
+export const {
+  loadProducts,
+  loadVendors,
+  addFilter,
+  removeFilter,
+  toggleMenu,
+} = catalogSlice.actions
 
 export default catalogSlice.reducer

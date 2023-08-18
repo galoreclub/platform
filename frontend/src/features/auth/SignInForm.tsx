@@ -2,7 +2,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useEffect, useRef, useState } from 'react'
 import { authFail, authSuccess } from './authSlice'
-import { useLoginMutation } from './authApiSlice'
 import {
   isErrorWithMessage,
   isFetchBaseQueryError,
@@ -14,8 +13,6 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
   const emailRef = useRef<HTMLInputElement>(null)
   const errRef = useRef<HTMLDivElement>(null)
   const [errMsg, setErrMsg] = useState('')
-
-  const [login, { isLoading }] = useLoginMutation()
   const dispatch = useAppDispatch()
 
   const handleToggle = (e: any) => {
@@ -32,10 +29,6 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
     emailRef.current?.focus()
     console.log(process.env.VITE_PUBLIC_STOREFRONT_TOKEN)
   }, [])
-
-  if (isLoading) {
-    return <>Loading...</>
-  }
 
   return (
     <>
@@ -74,23 +67,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
               .max(20, 'Must be 20 characters or less.')
               .required('This field is required.'),
           })}
-          onSubmit={async (credentials, { setSubmitting }) => {
-            try {
-              const userData = await login(credentials).unwrap()
-              dispatch(authSuccess(userData))
-              toggle()
-            } catch (err) {
-              if (isFetchBaseQueryError(err)) {
-                const errMsg =
-                  'error' in err ? err.error : JSON.stringify(err.data)
-                setErrMsg(errMsg)
-              } else if (isErrorWithMessage(err)) {
-                setErrMsg(err.message)
-              }
-              dispatch(authFail)
-              errRef.current?.focus()
-            }
-
+          onSubmit={(credentials, { setSubmitting }) => {
             setTimeout(() => {
               alert(JSON.stringify(credentials, null, 2))
               setSubmitting(false)
@@ -161,7 +138,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
                 <Field type="checkbox" name="remember" />
                 <span className="ml-1">Remember Me</span>
               </label>
-              <a href="/resetpassword">Forgot Password?</a>
+              <a href="/account/recover">Forgot Password?</a>
             </div>
             <button
               type="submit"

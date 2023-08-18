@@ -1,8 +1,19 @@
 import { gql } from '@apollo/client'
 
 export const GET_PRODUCTS = gql`
-  query ($cursor: String, $query: String) {
-    products(first: 12, after: $cursor, query: $query) {
+  query (
+    $cursor: String
+    $query: String!
+    $sortKey: ProductSortKeys
+    $reverse: Boolean
+  ) {
+    products(
+      first: 12
+      after: $cursor
+      query: $query
+      sortKey: $sortKey
+      reverse: $reverse
+    ) {
       edges {
         node {
           id

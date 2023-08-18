@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { GET_PRODUCTS } from '../../app/graphql/queries'
 import { useEffect, useState } from 'react'
 import { loadProducts } from './catalogSlice'
@@ -8,12 +8,19 @@ import { ProductList } from './ProductList'
 import { CatalogMenu } from './CatalogMenu'
 
 export const Catalog = () => {
-  const [query, setQuery] = useState('vendor:*')
   const [cursor, setCursor] = useState(null)
-  const dispatch = useAppDispatch()
+  const query = useAppSelector((state) => state.query.queryBuilder)
+  const sortKey = useAppSelector((state) => state.query.sortKey)
+  const reverse = useAppSelector((state) => state.query.reverse)
   const { data, loading, error } = useQuery(GET_PRODUCTS, {
-    variables: { query, cursor: cursor },
+    variables: {
+      query: query.join(' AND '),
+      sortKey: sortKey,
+      cursor: cursor,
+      reverse: reverse,
+    },
   })
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (data) {

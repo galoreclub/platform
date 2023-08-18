@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
             errorElement: <ErrorPage />,
           },
           {
-            path: '/account/reset',
+            path: '/account/recover',
             element: <ResetForm />,
             errorElement: <ErrorPage />,
           },
