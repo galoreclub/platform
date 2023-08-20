@@ -5,7 +5,7 @@ import { Landing } from '../pages/Landing.tsx'
 import { Home } from '../pages/Home.tsx'
 import { Account } from '../pages/Account.tsx'
 import { Catalog } from '../features/catalog/Catalog.tsx'
-import { ProductDetail } from '../features/catalog/ProductDetail.tsx'
+import { ProductDetailPage } from '../features/catalog/ProductDetailPage.tsx'
 import { ActivateForm } from '../features/auth/ActivateForm.tsx'
 import { ResetForm } from '../features/auth/ResetForm.tsx'
 
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/catalog/:handle',
-        element: <ProductDetail />,
+        element: <ProductDetailPage />,
         errorElement: <ErrorPage />,
       },
     ],

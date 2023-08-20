@@ -4,6 +4,7 @@ import homeImg1 from '../assets/home-1.png'
 import homeImg2 from '../assets/home-2.png'
 import homeImg3 from '../assets/home-3.png'
 import { AuthModal } from '../features/auth/AuthModal'
+import { Link } from 'react-router-dom'
 
 export const Home = (): React.ReactElement => {
   return (
@@ -33,12 +34,12 @@ export const Home = (): React.ReactElement => {
               vetted and authenticated by experts. Galore offers a sustainable
               and unique way to add luxury pieces into your wardrobe.
             </p>
-            <a
-              href="#"
+            <Link
+              to="/catalog"
               className="flex items-center justify-center bg-black px-10 py-2 uppercase text-white lg:w-[180px]"
             >
               buy
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mx-4 grid auto-cols-fr grid-flow-col items-center justify-center gap-8">

@@ -190,7 +190,9 @@ export const CatalogMenu = ({ data }: { data: any }) => {
                     label={`${price.min} ${price.max ? `- ${price.max}` : '+'}`}
                     name="price"
                     type="checkbox"
-                    value={price.min}
+                    value={`(variants.price:>${price.min} ${
+                      price.max ? `variants.price:<=${price.max}` : ''
+                    })`}
                   />
                 ))}
               </div>

@@ -16,12 +16,12 @@ export const FilterInput = ({ label, ...props }: InputProps) => {
   const checked = productFilters.includes(props.value)
 
   const filterHandler = (e: any) => {
-    const { value, checked, name } = e.target
+    const { value, checked } = e.target
     if (checked) {
-      dispatch(addFilter({ value, name }))
+      dispatch(addFilter({ value }))
     }
     if (!checked) {
-      dispatch(removeFilter({ value, name }))
+      dispatch(removeFilter({ value }))
     }
   }
 

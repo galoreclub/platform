@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface AuthState {
-  token: string | null
-  user: User | null
+  token: Token | null
+  user?: User | null
 }
 
-const initialState: AuthState = {
-  token: localStorage.getItem('token'),
-  user: null,
+export interface Token {
+  token: string
+  expiresAt: string
 }
 
 export interface User {
@@ -19,28 +19,30 @@ export interface User {
   acceptsMarketing?: boolean
 }
 
+const galoreToken = localStorage.getItem('galoreToken')
+const token = galoreToken ? JSON.parse(galoreToken) : null
+
+const initialState: AuthState = {
+  token: token,
+  user: null,
+}
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     authSuccess: (state, action: PayloadAction<any>) => {
-      localStorage.setItem('token', action.payload.token)
-      state.user = action.payload.user
-      state.token = action.payload.token
-    },
-    authFail: (state) => {
-      localStorage.removeItem('token')
-      state.token = null
-      state.user = null
+      const galoreToken = { ...action.payload }
+      localStorage.setItem('galoreToken', JSON.stringify(galoreToken))
+      state.token = galoreToken
     },
     authLogout: (state) => {
       localStorage.removeItem('token')
       state.token = null
-      state.user = null
     },
   },
 })
 
-export const { authSuccess, authFail, authLogout } = authSlice.actions
+export const { authSuccess, authLogout } = authSlice.actions
 
 export default authSlice.reducer

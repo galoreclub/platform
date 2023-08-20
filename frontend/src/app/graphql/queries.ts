@@ -60,6 +60,22 @@ export const GET_PRODUCT = gql`
           currencyCode
         }
       }
+      variants(first: 1) {
+        edges {
+          node {
+            id
+            title
+            selectedOptions {
+              name
+              value
+            }
+            priceV2 {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
     }
   }
 `

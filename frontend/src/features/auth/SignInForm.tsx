@@ -1,12 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useEffect, useRef, useState } from 'react'
-import { authFail, authSuccess } from './authSlice'
-import {
-  isErrorWithMessage,
-  isFetchBaseQueryError,
-} from '../../services/helpers'
 import { useAppDispatch } from '../../app/hooks'
+import { useMutation } from '@apollo/client'
+import { CUSTOMER_LOGIN } from '../../app/graphql/mutations'
+import { authSuccess } from './authSlice'
 
 export const SignInForm = ({ toggle, setNewUser }: any) => {
   const [type, setType] = useState('password')
@@ -14,6 +12,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
   const errRef = useRef<HTMLDivElement>(null)
   const [errMsg, setErrMsg] = useState('')
   const dispatch = useAppDispatch()
+  const [submitSignIn, { data, loading, error }] = useMutation(CUSTOMER_LOGIN)
 
   const handleToggle = (e: any) => {
     e.preventDefault()
@@ -26,9 +25,24 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
   }
 
   useEffect(() => {
-    emailRef.current?.focus()
+    if (data) {
+      dispatch(
+        authSuccess({
+          ...data.customerAccessTokenCreate.customerAccessToken,
+        })
+      )
+    } else if (error) {
+      setErrMsg(error.message)
+      errRef.current?.focus()
+    } else {
+      emailRef.current?.focus()
+    }
     console.log(process.env.VITE_PUBLIC_STOREFRONT_TOKEN)
-  }, [])
+  }, [data, error])
+
+  if (loading) {
+    console.log('loading...')
+  }
 
   return (
     <>
@@ -68,10 +82,12 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
               .required('This field is required.'),
           })}
           onSubmit={(credentials, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(credentials, null, 2))
-              setSubmitting(false)
-            }, 400)
+            // destructure form submission values to exclude remember me option (not accepted by storefront api)
+            const { remember, ...input } = credentials
+            submitSignIn({
+              variables: { input },
+            })
+            setSubmitting(false)
           }}
         >
           <Form className="mx-4 flex w-full flex-col gap-1 lg:px-10">

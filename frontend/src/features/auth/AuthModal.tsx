@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SignInForm } from './SignInForm'
 import { RegisterForm } from './RegisterForm'
+import { useAppSelector } from '../../app/hooks'
 
 export const AuthModal = () => {
+  const token = useAppSelector((state) => state.auth.token)
   const [open, toggle] = useState(true)
   const [newUser, setNewUser] = useState(false)
+
+  useEffect(() => {
+    if (token) {
+      if (Date.parse(token.expiresAt) >= Date.now()) {
+        toggle(false)
+      }
+    }
+  })
 
   return (
     <div

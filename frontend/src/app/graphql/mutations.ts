@@ -14,6 +14,22 @@ export const CUSTOMER_CREATE = gql`
     }
   }
 `
+export const CUSTOMER_LOGIN = gql`
+  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+    customerAccessTokenCreate(input: $input) {
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`
+
 export const CUSTOMER_ACTIVATE = gql`
   mutation customerActivate($id: ID!, $input: CustomerActivateInput!) {
     customerActivate(id: $id, input: $input) {
@@ -50,21 +66,6 @@ export const CUSTOMER_RESET = gql`
       }
       customer {
         id
-      }
-    }
-  }
-`
-export const LOGIN_CUSTOMER = gql`
-  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-    customerAccessTokenCreate(input: $input) {
-      customerAccessToken {
-        accessToken
-        expiresAt
-      }
-      customerUserErrors {
-        code
-        field
-        message
       }
     }
   }
