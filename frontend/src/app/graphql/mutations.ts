@@ -91,3 +91,16 @@ export const CUSTOMER_ADDRESS_CREATE = gql`
     }
   }
 `
+export const ADD_BAG = gql`
+  mutation AddBag($bag_id: String!, $brand: String!, $model: String!, $size: String!, $serialNum: Int!, $material: String!, $price: Float!) {
+    addBag(bag_id: $bag_id, brand: $brand, model: $model, size: $size, serialNum: $serialNum, material: $material, price: $price) {
+      bag_id
+      brand
+      model
+      size
+      serialNum
+      material
+      price
+    }
+  }
+`

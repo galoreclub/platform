@@ -90,3 +90,17 @@ export const GET_VENDORS = gql`
     }
   }
 `
+
+export const GET_BAGS = gql`
+  query {
+    bags {
+      bag_id
+      brand
+      model
+      size
+      serialNum
+      material
+      price
+    }
+  }
+`
