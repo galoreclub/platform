@@ -29,6 +29,10 @@ const bagSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  images: [{
+    type: Buffer,
+    required: false,
+  }]
 });
 
 export default mongoose.model('Bag', bagSchema);
