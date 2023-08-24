@@ -27,6 +27,7 @@ export const AddBagForm = () => {
             serialNum: '',
             material: '',
             price: '',
+            images: [],
           }}
           validationSchema={Yup.object({
             bag_id: Yup.string().required('This field is required.'),
@@ -47,11 +48,13 @@ export const AddBagForm = () => {
                 serialNum: values.serialNum,
                 material: values.material,
                 price: values.price,
+                images: values.images,
               },
             });
             setSubmitting(false);
           }}
         >
+          {({ setFieldValue }) => (
           <Form className="mx-4 flex w-full flex-col gap-1 lg:px-10">
             <Field
               className="border-[0.4px] border-solid border-border p-1 text-xs"
@@ -72,7 +75,16 @@ export const AddBagForm = () => {
             <Field className="border-[0.4px] border-solid border-border p-1 text-xs" type="number" name="serialNum" placeholder="Serial Number" />
             <Field className="border-[0.4px] border-solid border-border p-1 text-xs" type="text" name="material" placeholder="Material" />
             <Field className="border-[0.4px] border-solid border-border p-1 text-xs" type="number" name="price" placeholder="Price" />
-
+            <input
+              type="file"
+              name="images"
+              accept="image/*"
+              multiple
+              onChange={(event) => {
+                const fileArray = Array.from(event.currentTarget.files); // Convert FileList to array
+                setFieldValue('images', fileArray);
+              }}
+            />
             <button
               type="submit"
               className="mx-auto mt-2 flex items-center justify-center bg-black px-10 py-2 text-xs uppercase text-white"
@@ -80,6 +92,7 @@ export const AddBagForm = () => {
               Add Bag
             </button>
           </Form>
+            )}
         </Formik>
       </div>
     </div>

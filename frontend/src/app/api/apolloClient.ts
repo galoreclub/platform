@@ -1,6 +1,6 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink, split } from '@apollo/client'
 import { createStorefrontClient } from '@shopify/hydrogen-react'
-import { ApolloLink, split } from '@apollo/client'
+import { createUploadLink } from 'apollo-upload-client';
 
 const shopifyClient = createStorefrontClient({
   publicStorefrontToken: '04830f22f361bcfd9b5a9ebec1deabe0',
@@ -8,23 +8,38 @@ const shopifyClient = createStorefrontClient({
   storefrontApiVersion: '2023-07',
 })
 
-const customServerLink = createHttpLink({
-  uri: 'https://galore-bag-and-story.fly.dev/graphql',
+const customServerLink = createUploadLink({
+  uri: 'https://galore-bag-and-story.fly.dev/',
 })
 
-const link = split(
-  // Define a test function to decide which link to route to
-  (operation) => {
-    // You'll need to customize this logic to decide which requests go to which server
-    // return operation.operationName.startsWith('Bag');
-    return operation.operationName === 'AddBag';
-  },
-  customServerLink, // The link to use for custom server operations
-  createHttpLink({
-    uri: shopifyClient.getStorefrontApiUrl(),
-    headers: shopifyClient.getPublicTokenHeaders(),
-  }) // The link to use for Shopify operations
-)
+const customServerMiddlewareLink = new ApolloLink((operation, forward) => {
+  // Here, you can add any headers you want to the request.
+  operation.setContext({
+    headers: {
+      "x-apollo-operation-name": operation.operationName
+    }
+  });
+
+  // Call the next link in the middleware chain.
+  return forward(operation);
+});
+
+const shopifyLink = createHttpLink({
+  uri: shopifyClient.getStorefrontApiUrl(),
+  headers: shopifyClient.getPublicTokenHeaders(),
+})
+
+const link = ApolloLink.from([
+  split(
+    // Define a test function to decide which link to route to
+    (operation) => {
+      // You'll need to customize this logic to decide which requests go to which server
+      return operation.operationName === 'AddBag';
+    },
+    customServerMiddlewareLink.concat(customServerLink), // First, apply middleware, then direct to the custom server link
+    shopifyLink // The link to use for Shopify operations
+  )
+]);
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
