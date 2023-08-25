@@ -8,6 +8,7 @@ import { Catalog } from '../features/catalog/Catalog.tsx'
 import { ProductDetailPage } from '../features/catalog/ProductDetailPage.tsx'
 import { ActivateForm } from '../features/auth/ActivateForm.tsx'
 import { ResetForm } from '../features/auth/ResetForm.tsx'
+import BagList from '../pages/NewBagReview.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,11 @@ export const router = createBrowserRouter([
       {
         path: '/catalog/:handle',
         element: <ProductDetailPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/bagsReview',
+        element: <BagList />,
         errorElement: <ErrorPage />,
       },
     ],
