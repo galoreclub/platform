@@ -4,13 +4,13 @@ import { TextInput } from '../../components/TextInput'
 import { PasswordInput } from '../../components/PasswordInput'
 import { useMutation } from '@apollo/client'
 import { CUSTOMER_CREATE } from '../../app/graphql/mutations'
-import { Dialog } from '../../components/Dialog'
+import { DialogModal, useDialog } from '../../components/DialogModal'
 import { useEffect, useState } from 'react'
 
 export const RegisterForm = ({ toggle, setNewUser }: any) => {
   const [submitForm, { data, loading, error }] = useMutation(CUSTOMER_CREATE)
-  const [showDialog, setShowDialog] = useState(false)
   const [email, setEmail] = useState('')
+  const { isOpen, openDialog, closeDialog } = useDialog()
 
   if (loading) {
     console.log('loading...')
@@ -22,12 +22,20 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
 
   useEffect(() => {
     if (data) {
-      setShowDialog(true)
+      toggle(false)
+      openDialog()
     }
   }, [data])
 
   return (
     <>
+      <DialogModal
+        open={isOpen}
+        onClose={closeDialog}
+        message={`An activation email has been sent to ${
+          data ? email : 'your email address'
+        }. Please activate your account. If you do not receive an email, please check your spam folder.`}
+      />
       <div className="m-auto flex w-10/12 flex-col items-center justify-center gap-4 bg-white p-6 md:w-6/12 lg:w-4/12 lg:p-10">
         <div className="flex w-full flex-row items-center justify-between">
           <button
@@ -151,13 +159,6 @@ export const RegisterForm = ({ toggle, setNewUser }: any) => {
             </div>
           </Form>
         </Formik>
-        <Dialog
-          showDialog={showDialog}
-          setShowDialog={() => setShowDialog(false)}
-          message={`An activation email has been sent to ${
-            data ? email : 'your email address'
-          }. Please activate your account. If you do not receive an email, please check your spam folder.`}
-        />
       </div>
     </>
   )

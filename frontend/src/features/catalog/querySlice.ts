@@ -30,7 +30,6 @@ export const querySlice = createSlice({
     builder
       .addCase(addFilter, (state, action) => {
         state.queryBuilder.push(action.payload.value)
-        console.log(current(state.queryBuilder))
       })
       .addCase(removeFilter, (state, action) => {
         state.queryBuilder = state.queryBuilder.filter(

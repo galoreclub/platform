@@ -37,7 +37,6 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
     } else {
       emailRef.current?.focus()
     }
-    console.log(process.env.VITE_PUBLIC_STOREFRONT_TOKEN)
   }, [data, error])
 
   if (loading) {
@@ -179,6 +178,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
           <span className="w-full border-b-[2px] border-solid border-black"></span>
         </div>
         <div className="m-4 flex flex-col items-center gap-4 text-sm">
+          {/* Social logins not possible without multipass or app extension */}
           <a href="#">CONTINUE WITH FACEBOOK</a>
           <a href="#">CONTINUE WITH GOOGLE</a>
         </div>

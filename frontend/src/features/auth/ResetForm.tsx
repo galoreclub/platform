@@ -1,15 +1,19 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { TextInput } from '../../components/TextInput'
-import { Dialog } from '../../components/Dialog'
-import { useState } from 'react'
+import { DialogModal, useDialog } from '../../components/DialogModal'
 import { PasswordInput } from '../../components/PasswordInput'
 
 export const ResetForm = () => {
-  const [showDialog, setShowDialog] = useState(false)
+  const { isOpen, openDialog, closeDialog } = useDialog()
 
   return (
     <>
+      <DialogModal
+        open={isOpen}
+        onClose={closeDialog}
+        message="Your password has been reset."
+      />
       <Formik
         initialValues={{
           email: '',
@@ -39,7 +43,7 @@ export const ResetForm = () => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
-            setShowDialog(true)
+            openDialog()
           }, 400)
         }}
       >
@@ -66,11 +70,6 @@ export const ResetForm = () => {
           </button>
         </Form>
       </Formik>
-      <Dialog
-        showDialog={showDialog}
-        setShowDialog={() => setShowDialog(false)}
-        message="Your password has been reset."
-      />
     </>
   )
 }

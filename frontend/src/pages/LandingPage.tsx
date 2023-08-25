@@ -3,7 +3,7 @@ import { HowSection } from '../components/HowSection'
 import { IntroSection } from '../components/IntroSection'
 import { LoopSection } from '../components/LoopSection'
 
-export const Landing = () => {
+export const LandingPage = () => {
   return (
     <>
       <HeroSection />

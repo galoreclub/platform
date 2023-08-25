@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import DOMPurify from 'dompurify'
 import React from 'react'
 import { ProductDetail } from './ProductDetail'
+import { ProductProvider, flattenConnection } from '@shopify/hydrogen-react'
+import { ProductVariantConnection } from '@shopify/hydrogen-react/storefront-api-types'
 
 export const ProductDetailPage = () => {
   const { handle } = useParams()
@@ -27,9 +29,19 @@ export const ProductDetailPage = () => {
   } else if (error) {
     content = <>{error.message}</>
   } else if (data && description) {
+    const variantId = flattenConnection<ProductVariantConnection>(
+      data.product.variants
+    )[0].id
+
     content = (
       <>
-        <ProductDetail product={data.product} description={description} />
+        <ProductProvider data={data.product} initialVariantId={variantId}>
+          <ProductDetail
+            product={data.product}
+            description={description}
+            variantId={variantId}
+          />
+        </ProductProvider>
       </>
     )
   }

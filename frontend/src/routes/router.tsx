@@ -1,13 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Root from '../components/Root.tsx'
 import ErrorPage from '../pages/ErrorPage.tsx'
-import { Landing } from '../pages/Landing.tsx'
-import { Home } from '../pages/Home.tsx'
+import { LandingPage } from '../pages/LandingPage.tsx'
+import { HomePage } from '../pages/HomePage.tsx'
 import { Account } from '../pages/Account.tsx'
-import { Catalog } from '../features/catalog/Catalog.tsx'
 import { ProductDetailPage } from '../features/catalog/ProductDetailPage.tsx'
 import { ActivateForm } from '../features/auth/ActivateForm.tsx'
 import { ResetForm } from '../features/auth/ResetForm.tsx'
+import { CartPage } from '../features/cart/CartPage.tsx'
+import { CatalogPage } from '../pages/CatalogPage.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -17,12 +18,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Landing />,
+        element: <LandingPage />,
         errorElement: <ErrorPage />,
       },
       {
         path: '/home',
-        element: <Home />,
+        element: <HomePage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -44,12 +45,17 @@ export const router = createBrowserRouter([
       },
       {
         path: '/catalog',
-        element: <Catalog />,
+        element: <CatalogPage />,
         errorElement: <ErrorPage />,
       },
       {
         path: '/catalog/:handle',
         element: <ProductDetailPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/cart',
+        element: <CartPage />,
         errorElement: <ErrorPage />,
       },
     ],
