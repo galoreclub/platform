@@ -5,9 +5,10 @@ const bagTypeDefs = `
   scalar Upload
 
   type Image {
-    filename: String!
-    mimetype: String!
-    encoding: String!
+    data: String
+    filename: String
+    mimetype: String
+    encoding: String
   }
 
   type Bag {
@@ -18,7 +19,7 @@ const bagTypeDefs = `
     serialNum: Int!
     material: String!
     price: Float!
-    images: [Image!]
+    images: [Image]
   }
 
   type Query {
@@ -34,7 +35,17 @@ const bagTypeDefs = `
 
 const bagResolvers = {
   Query: {
-    bags: () => Bag.find(),
+    bags: async () => {
+      const bags = await Bag.find();
+
+      return bags.map((bag) => ({
+        ...bag._doc,
+        images: bag.images.map((image) => ({
+          data: image.toString('base64'), // Convert Buffer to base64 string
+          mimetype: 'image/jpeg', // This is just an example. In a real scenario, you'd determine the mime type based on the image or store it in the database.
+        })),
+      }));
+    },
   },
   Mutation: {
     addBag: async (
@@ -42,19 +53,19 @@ const bagResolvers = {
       { bag_id, brand, model, size, serialNum, material, price, images }
     ) => {
       try {
-        // const { createReadStream } = await image;
-
         // Use a Promise to handle the stream and convert it to a buffer
-        const imageBuffers = await Promise.all(images.map(async (image) => {
-          const { createReadStream } = await image;
-          const chunks = [];
-          return new Promise((resolve, reject) => {
-            createReadStream()
-              .on('data', (chunk) => chunks.push(chunk))
-              .on('end', () => resolve(Buffer.concat(chunks)))
-              .on('error', reject);
-          });
-        }));
+        const imageBuffers = await Promise.all(
+          images.map(async (image) => {
+            const { createReadStream } = await image;
+            const chunks = [];
+            return new Promise((resolve, reject) => {
+              createReadStream()
+                .on('data', (chunk) => chunks.push(chunk))
+                .on('end', () => resolve(Buffer.concat(chunks)))
+                .on('error', reject);
+            });
+          })
+        );
 
         // Create the new bag with the buffer containing the image data
         const newBag = new Bag({
@@ -76,7 +87,7 @@ const bagResolvers = {
     },
     updateBag: async (
       _,
-      { bag_id, brand, model, size, serialNum, material, price, image  }
+      { bag_id, brand, model, size, serialNum, material, price, image }
     ) => {
       return Bag.findOneAndUpdate(
         { bag_id },
