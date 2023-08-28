@@ -27,7 +27,7 @@ export const HeroSection = () => {
             </li>
           </ul>
         </div>
-        <div className="flex max-h-[480px] w-full items-end justify-center overflow-hidden object-contain">
+        <div className="flex max-h-[480px] w-full items-end justify-center overflow-hidden">
           <video
             autoPlay
             loop

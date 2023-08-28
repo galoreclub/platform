@@ -6,7 +6,7 @@ export const CatalogPage = () => {
       <div className="m-auto flex w-full flex-col gap-4 p-4">
         <div className="mb-10 flex flex-row gap-1 self-start text-xs leading-4">
           <a href="/home">HOME</a>
-          <span className="border-l-solid border-l-[1px] border-l-black pl-1">
+          <span className="border-l-solid border-l-[1px] border-l-black pl-1 font-helvetica-bold">
             BUY
           </span>
         </div>

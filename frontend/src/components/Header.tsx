@@ -57,7 +57,7 @@ export const Header = () => {
                 </li>
                 <li className="text-center">
                   <Link
-                    to="#"
+                    to="/rent"
                     className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                   >
                     rent
@@ -73,7 +73,7 @@ export const Header = () => {
                 </li>
                 <li className="text-center">
                   <Link
-                    to="#"
+                    to="/who-we-are"
                     className="text-white-200 mr-2 mt-4 block lg:mt-0 lg:inline-block"
                   >
                     who we are
