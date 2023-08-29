@@ -5,7 +5,7 @@ import { CartProvider } from '@shopify/hydrogen-react'
 
 const Root = () => {
   return (
-    <>
+    <div className="m-auto flex max-w-screen-2xl flex-col">
       <CartProvider
         onLineAdd={() => {
           console.log('a line is being added')
@@ -15,12 +15,12 @@ const Root = () => {
         }}
       >
         <Header />
-        <main id="main" className="mb-auto flex flex-col justify-start">
+        <main id="main" className="mb-auto flex w-full flex-col justify-start">
           <Outlet />
         </main>
         <Footer />
       </CartProvider>
-    </>
+    </div>
   )
 }
 

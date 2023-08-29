@@ -58,7 +58,7 @@ export const HeaderDrawer = ({
                 </li>
                 <li>
                   <Link
-                    to="#"
+                    to="/rent"
                     className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
                     onClick={toggleHeaderDrawer}
                   >
@@ -76,7 +76,7 @@ export const HeaderDrawer = ({
                 </li>
                 <li>
                   <Link
-                    to="#"
+                    to="/who-we-are"
                     className="text-white-200 mr-4 mt-4 block lg:mt-0 lg:inline-block"
                     onClick={toggleHeaderDrawer}
                   >

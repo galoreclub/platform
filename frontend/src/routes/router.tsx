@@ -9,6 +9,8 @@ import { ActivateForm } from '../features/auth/ActivateForm.tsx'
 import { ResetForm } from '../features/auth/ResetForm.tsx'
 import { CartPage } from '../features/cart/CartPage.tsx'
 import { CatalogPage } from '../pages/CatalogPage.tsx'
+import { Rent } from '../pages/Rent.tsx'
+import { WhoWeAre } from '../pages/WhoWeAre.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +58,16 @@ export const router = createBrowserRouter([
       {
         path: '/cart',
         element: <CartPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/rent',
+        element: <Rent />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/who-we-are',
+        element: <WhoWeAre />,
         errorElement: <ErrorPage />,
       },
     ],
