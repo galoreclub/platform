@@ -5,6 +5,7 @@ import homeImg2 from '../assets/home-2.png'
 import homeImg3 from '../assets/home-3.png'
 import { AuthModal } from '../features/auth/AuthModal'
 import { Link } from 'react-router-dom'
+import { AddBagForm } from '../features/auth/CreateBagForm'
 
 export const Home = (): React.ReactElement => {
   return (
@@ -87,7 +88,8 @@ export const Home = (): React.ReactElement => {
           </div>
         </div>
       </section>
-      <AuthModal />
+      {/* <AuthModal />*/}
+      <AddBagForm />
     </>
   )
 }

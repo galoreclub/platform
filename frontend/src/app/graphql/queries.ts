@@ -98,6 +98,10 @@ export const GET_BAGS = gql`
       bag_id
       brand
       model
+      size
+      serialNum
+      material
+      price
       images {
         data
         mimetype
