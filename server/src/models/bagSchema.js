@@ -1,5 +1,6 @@
 import Bag from './bagModel.js';
 // import { createWriteStream } from 'fs';
+import fetch from 'node-fetch';
 
 const bagTypeDefs = `
   scalar Upload
@@ -9,6 +10,12 @@ const bagTypeDefs = `
     filename: String
     mimetype: String
     encoding: String
+  }
+
+  type PipedreamResponse {
+    id: String
+    success: Boolean
+    message: String
   }
 
   type Bag {
@@ -30,6 +37,7 @@ const bagTypeDefs = `
     addBag(bag_id: String!, brand: String!, model: String!, size: String!, serialNum: Int!, material: String!, price: Float!, images: [Upload!]): Bag
     updateBag(bag_id: String!, brand: String!, model: String!, size: String!, serialNum: Int!, material: String!, price: Float!, images: [Upload!]): Bag
     deleteBag(bag_id: String!): Boolean
+    triggerPipedreamEvent(bag_id: String!): PipedreamResponse
   }
 `;
 
@@ -99,6 +107,43 @@ const bagResolvers = {
       await Bag.findOneAndDelete({ bag_id });
       return true;
     },
+    triggerPipedreamEvent: async (_, bag_id) => {
+      try {
+        const pipedreamEndpoint = process.env.PIPEDREAM_ENDPOINT;
+        const payload = bag_id;
+        const config = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        };
+
+        const response = await fetch(pipedreamEndpoint, config);
+
+        if (response.ok) {
+          const data = await response.json();
+          return {
+            id: data.id || "Unknown ID",
+            success: true,
+            message: "Successfully triggered Pipedream event",
+          };
+        } else {
+          return {
+            id: "Unknown ID",
+            success: false,
+            message: `Failed to trigger Pipedream event, status code: ${response.status}`,
+          };
+        }
+      } catch (error) {
+        console.error(`An error occurred while sending the trigger to Pipedream: ${error}`);
+        return {
+          id: "Unknown ID",
+          success: false,
+          message: `An error occurred: ${error.message}`,
+        };
+      }
+    }
   },
 };
 

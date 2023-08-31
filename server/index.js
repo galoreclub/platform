@@ -10,11 +10,11 @@ const { default: graphqlUploadExpress } = await import(
 );
 import { default as GraphQLUpload } from 'graphql-upload/GraphQLUpload.mjs';
 
-import executableSchema from './src/schema.js'; // Assuming this file contains your schema
-import { connectToDb } from './src/db.js'; // Your database connection
+import executableSchema from './src/schema.js';
+import { connectToDb } from './src/db.js';
 
 // Connect to your database
-connectToDb();
+connectToDb(); 
 
 const app = express();
 const httpServer = http.createServer(app);
