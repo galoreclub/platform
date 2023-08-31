@@ -90,3 +90,18 @@ export const GET_VENDORS = gql`
     }
   }
 `
+
+export const GET_BAGS = gql`
+  query GetBags {
+    bags {
+      _id
+      bag_id
+      brand
+      model
+      images {
+        data
+        mimetype
+      }
+    }
+  }
+`;

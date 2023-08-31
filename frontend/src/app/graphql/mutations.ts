@@ -91,3 +91,13 @@ export const CUSTOMER_ADDRESS_CREATE = gql`
     }
   }
 `
+
+export const TRIGGER_PIPEDREAM_EVENT = gql`
+  mutation TriggerPipedreamEvent($bag_id: String!) {
+    triggerPipedreamEvent(bag_id: $bag_id) {
+      id
+      success
+      message
+    }
+  }
+`;

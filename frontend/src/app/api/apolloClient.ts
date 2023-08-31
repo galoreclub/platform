@@ -9,7 +9,7 @@ const shopifyClient = createStorefrontClient({
 })
 
 const customServerLink = createUploadLink({
-  uri: 'https://galore-bag-and-story.fly.dev/',
+  uri: 'https://galore-bag-and-story.fly.dev/graphql',
 })
 
 const customServerMiddlewareLink = new ApolloLink((operation, forward) => {
@@ -29,7 +29,7 @@ const shopifyLink = createHttpLink({
   headers: shopifyClient.getPublicTokenHeaders(),
 })
 
-const CUSTOM_SERVER_OPERATIONS = new Set(['AddBag', 'UpdateBag', 'DeleteBag', 'FetchBags', 'GetBags']);
+const CUSTOM_SERVER_OPERATIONS = new Set(['AddBag', 'UpdateBag', 'DeleteBag', 'FetchBags', 'GetBags', 'TriggerPipedreamEvent']);
 
 const link = ApolloLink.from([
   split(
