@@ -9,6 +9,7 @@ import { ProductDetailPage } from '../features/catalog/ProductDetailPage.tsx'
 import { ActivateForm } from '../features/auth/ActivateForm.tsx'
 import { ResetForm } from '../features/auth/ResetForm.tsx'
 import BagList from '../pages/NewBagReview.tsx'
+import { AddBagForm } from '../features/auth/CreateBagForm.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,11 @@ export const router = createBrowserRouter([
       {
         path: '/bagsReview',
         element: <BagList />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/addNewBag',
+        element: <AddBagForm />,
         errorElement: <ErrorPage />,
       },
     ],

@@ -88,8 +88,7 @@ export const Home = (): React.ReactElement => {
           </div>
         </div>
       </section>
-      {/* <AuthModal />*/}
-      <AddBagForm />
+      <AuthModal />
     </>
   )
 }
