@@ -1,15 +1,7 @@
 import mongoose from 'mongoose';
 
 const bagSchema = new mongoose.Schema({
-  bag_id: {
-    type: String,
-    required: true,
-  },
   brand: {
-    type: String,
-    required: true,
-  },
-  model: {
     type: String,
     required: true,
   },
@@ -17,18 +9,23 @@ const bagSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  condition: {
+    type: String,
+    required: true,
+  },
   serialNum: {
-    type: Number,
+    type: String,
     required: true,
   },
   material: {
     type: String,
     require: false,
   },
-  price: {
+  model: {
     type: Number,
     required: false,
   },
+  // No price now
   images: [{
     type: Buffer,
     required: false,
