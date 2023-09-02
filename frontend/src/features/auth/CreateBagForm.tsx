@@ -21,55 +21,43 @@ export const AddBagForm = () => {
         </h1>
         <Formik
           initialValues={{
-            bag_id: '',
             brand: '',
-            model: '',
             size: '',
+            condition: '',
             serialNum: '',
             material: '',
-            price: '',
+            model: '',
             images: [],
           }}
           validationSchema={Yup.object({
-            bag_id: Yup.string().required('This field is required.'),
             brand: Yup.string().required('This field is required.'),
             model: Yup.string().required('This field is required.'),
             size: Yup.string().required('This field is required.'),
-            serialNum: Yup.number().required('This field is required.'),
+            serialNum: Yup.string().required('This field is required.'),
             material: Yup.string(),
-            price: Yup.number(),
+            price: Yup.string(),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            addBag({
-              variables: {
-                bag_id: values.bag_id,
-                brand: values.brand,
-                model: values.model,
-                size: values.size,
-                serialNum: values.serialNum,
-                material: values.material,
-                price: values.price,
-                images: values.images,
-              },
-            })
+            try {
+              addBag({
+                variables: {
+                  brand: values.brand,
+                  size: values.size,
+                  condition: values.condition,
+                  serialNum: values.serialNum,
+                  material: values.material,
+                  model: values.model,
+                  images: values.images,
+                },
+              })
+            } catch (error) {
+              console.log(error);
+            }
             setSubmitting(false)
           }}
         >
           {({ setFieldValue }) => (
             <Form className="flex flex-col gap-6 self-center">
-              <Field
-                className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
-                type="text"
-                name="bag_id"
-                placeholder="Bag ID"
-              />
-              <ErrorMessage
-                className="text-xs text-error md:text-sm"
-                name="bag_id"
-                component="div"
-              />
-
-              {/* Repeat similar pattern for other fields */}
               <Field
                 className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
                 type="text"
@@ -79,18 +67,18 @@ export const AddBagForm = () => {
               <Field
                 className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
                 type="text"
-                name="model"
-                placeholder="Model"
-              />
-              <Field
-                className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
-                type="text"
                 name="size"
                 placeholder="Size"
               />
               <Field
                 className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
-                type="number"
+                type="text"
+                name="condition"
+                placeholder="Condition"
+              />
+              <Field
+                className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
+                type="text"
                 name="serialNum"
                 placeholder="Serial Number"
               />
@@ -102,9 +90,9 @@ export const AddBagForm = () => {
               />
               <Field
                 className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base"
-                type="number"
-                name="price"
-                placeholder="Price"
+                type="text"
+                name="model"
+                placeholder="Model"
               />
               <input
                 className="border-[0.4px] border-solid border-border p-1 text-xs lg:text-base file:bg-black file:px-3 file:uppercase file:text-white file:cursor-pointer"

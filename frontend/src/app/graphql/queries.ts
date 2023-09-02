@@ -95,13 +95,12 @@ export const GET_BAGS = gql`
   query GetBags {
     bags {
       _id
-      bag_id
       brand
-      model
       size
+      condition
       serialNum
       material
-      price
+      model
       images {
         data
         mimetype

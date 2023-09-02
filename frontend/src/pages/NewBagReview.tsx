@@ -9,9 +9,12 @@ interface Image {
 }
 
 interface Bag {
-  id: string
-  bag_id: string
+  _id: string
   brand: string
+  size: string
+  condition: string
+  serialNum: string
+  material: string
   model: string
   images: Image[]
 }
@@ -19,7 +22,6 @@ interface Bag {
 interface GetBagsResponse {
   bags: Bag[]
 }
-
 
 const BagList: React.FC = () => {
   const { loading, error, data } = useQuery<GetBagsResponse>(GET_BAGS)
@@ -34,13 +36,13 @@ const BagList: React.FC = () => {
     setOpen(true)
   }
 
-  const handleAddToShopify = async (bag_id: string, _id: string) => {
+  const handleAddToShopify = async (_id: string) => {
     try {
-      console.log(bag_id);
+      // console.log(bag_id);
       console.log(_id);
 
       const { data } = await triggerPipedreamEvent({
-        variables: { bag_id: _id },
+        variables: { _id },
       });
       if (data?.triggerPipedreamEvent?.success) {
         console.log("Successfully added to Shopify");
@@ -63,7 +65,7 @@ const BagList: React.FC = () => {
     return (
       <section className="m-auto flex flex-col gap-6 py-6 md:w-10/12 lg:gap-20">
         {data?.bags.map(bag => (
-          <div key={bag.bag_id} className="mx-4 grid auto-cols-fr grid-flow-col items-center justify-center gap-8">
+          <div key={bag._id} className="mx-4 grid auto-cols-fr grid-flow-col items-center justify-center gap-8">
             <h3 className="flex items-center justify-center font-seasons text-2xl lg:text-4xl">
               {bag.brand} - {bag.model}
             </h3>
@@ -77,7 +79,7 @@ const BagList: React.FC = () => {
               />
             ))}
             <button
-              onClick={() => handleAddToShopify(bag.bag_id, bag._id)}
+              onClick={() => handleAddToShopify(bag._id)}
               className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
             >
               Add to Shopify

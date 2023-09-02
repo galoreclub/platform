@@ -93,8 +93,8 @@ export const CUSTOMER_ADDRESS_CREATE = gql`
 `
 
 export const TRIGGER_PIPEDREAM_EVENT = gql`
-  mutation TriggerPipedreamEvent($bag_id: String!) {
-    triggerPipedreamEvent(bag_id: $bag_id) {
+  mutation TriggerPipedreamEvent($_id: String!) {
+    triggerPipedreamEvent(_id: $_id) {
       id
       success
       message
@@ -102,15 +102,14 @@ export const TRIGGER_PIPEDREAM_EVENT = gql`
   }
 `;
 export const ADD_BAG = gql`
-  mutation AddBag($bag_id: String!, $brand: String!, $model: String!, $size: String!, $serialNum: Int!, $material: String!, $price: Float!, $images: [Upload!]) {
-    addBag(bag_id: $bag_id, brand: $brand, model: $model, size: $size, serialNum: $serialNum, material: $material, price: $price, images: $images) {
-      bag_id
+  mutation AddBag($brand: String!, $size: String!, $condition: String!, $serialNum: String!, $material: String!, $model: String!,  $images: [Upload!]) {
+    addBag(brand: $brand, size: $size, condition: $condition, serialNum: $serialNum, material: $material, model: $model, images: $images) {
       brand
-      model
       size
+      condition
       serialNum
       material
-      price
+      model
     }
   }
 `

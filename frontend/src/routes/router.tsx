@@ -9,7 +9,7 @@ import { ProductDetailPage } from '../features/catalog/ProductDetailPage.tsx'
 import { ActivateForm } from '../features/auth/ActivateForm.tsx'
 import { ResetForm } from '../features/auth/ResetForm.tsx'
 import BagList from '../pages/NewBagReview.tsx'
-import { AddBagForm } from '../features/auth/CreateBagForm.tsx'
+import { AddBagForm } from '../features/auth/CreateBagForm.jsx'
 
 export const router = createBrowserRouter([
   {
