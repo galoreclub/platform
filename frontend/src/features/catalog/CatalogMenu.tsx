@@ -7,6 +7,7 @@ import { loadVendors, toggleMenu } from './catalogSlice'
 import { FilterInput } from './FilterInput'
 import React from 'react'
 import { SortInput } from './SortInput'
+import { LoadingPage } from '../../components/Loading'
 
 const sizeList = ['XS', 'S', 'M', 'L', 'XL ']
 const colorList = [
@@ -55,7 +56,7 @@ export const CatalogMenu = ({ data }: { data: any }) => {
   }, [vendorsData])
 
   if (loading && vendorList.length < 1) {
-    content = <>Loading...</>
+    content = <LoadingPage />
   } else if (error) {
     content = <>{error.message}</>
   } else {

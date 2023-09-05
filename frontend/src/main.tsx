@@ -14,8 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
         <ShopifyProvider
-          storeDomain="https://galore-theme-test.myshopify.com"
-          storefrontToken="04830f22f361bcfd9b5a9ebec1deabe0"
+          storeDomain={import.meta.env.VITE_STORE_DOMAIN}
+          storefrontToken={import.meta.env.VITE_PUBLIC_STOREFRONT_TOKEN}
           storefrontApiVersion="2023-07"
           countryIsoCode="GB"
           languageIsoCode="EN"

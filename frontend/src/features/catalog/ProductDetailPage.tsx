@@ -7,6 +7,7 @@ import React from 'react'
 import { ProductDetail } from './ProductDetail'
 import { ProductProvider, flattenConnection } from '@shopify/hydrogen-react'
 import { ProductVariantConnection } from '@shopify/hydrogen-react/storefront-api-types'
+import { LoadingPage } from '../../components/Loading'
 
 export const ProductDetailPage = () => {
   const { handle } = useParams()
@@ -25,7 +26,7 @@ export const ProductDetailPage = () => {
   }, [data])
 
   if (loading && !description) {
-    content = <>Loading...</>
+    content = <LoadingPage />
   } else if (error) {
     content = <>{error.message}</>
   } else if (data && description) {

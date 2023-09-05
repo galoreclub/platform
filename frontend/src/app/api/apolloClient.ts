@@ -2,8 +2,8 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { createStorefrontClient } from '@shopify/hydrogen-react'
 
 const shopifyClient = createStorefrontClient({
-  publicStorefrontToken: '04830f22f361bcfd9b5a9ebec1deabe0',
-  storeDomain: 'https://galore-theme-test.myshopify.com',
+  publicStorefrontToken: import.meta.env.VITE_PUBLIC_STOREFRONT_TOKEN,
+  storeDomain: import.meta.env.VITE_STORE_DOMAIN,
   storefrontApiVersion: '2023-07',
 })
 

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useAppDispatch } from '../../app/hooks'
 import { SortKey, updateSortDirection, updateSortKey } from './querySlice'
 
 type InputProps = {
