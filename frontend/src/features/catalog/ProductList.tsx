@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import { ProductPrice, flattenConnection } from '@shopify/hydrogen-react'
 import ProductImage from '../../components/ProductImage'
+import { LoadingPage } from '../../components/Loading'
 
 export const ProductList = ({ data }: { data: any }) => {
   const products = flattenConnection(data.products)
 
   if (!products) {
-    return <>Loading...</>
+    return <LoadingPage />
   }
 
   return (

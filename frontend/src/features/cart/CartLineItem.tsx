@@ -6,11 +6,12 @@ import {
   Money,
 } from '@shopify/hydrogen-react'
 import { Link } from 'react-router-dom'
+import { LoadingPage } from '../../components/Loading'
 
 export const CartLineItem = ({ inDialog }: { inDialog: boolean }) => {
   const { id: lineId, merchandise } = useCartLine()
 
-  if (!merchandise) return <>Loading...</>
+  if (!merchandise) return <LoadingPage />
 
   return (
     <div

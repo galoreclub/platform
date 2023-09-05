@@ -1,12 +1,11 @@
 import { useQuery } from '@apollo/client'
 import { useAppSelector } from '../../app/hooks'
 import { GET_PRODUCTS } from '../../app/graphql/queries'
-import { useState } from 'react'
 import { ProductList } from './ProductList'
 import { CatalogMenu } from './CatalogMenu'
+import { LoadingPage } from '../../components/Loading'
 
 export const Catalog = () => {
-  const [cursor, setCursor] = useState(null)
   const query = useAppSelector((state) => state.query.queryBuilder)
   const sortKey = useAppSelector((state) => state.query.sortKey)
   const reverse = useAppSelector((state) => state.query.reverse)
@@ -14,13 +13,13 @@ export const Catalog = () => {
     variables: {
       query: query.join(' AND '),
       sortKey: sortKey,
-      cursor: cursor,
+      cursor: null,
       reverse: reverse,
     },
   })
 
   if (loading) {
-    return <>Loading...</>
+    return <LoadingPage size={60} />
   }
 
   if (error) {
