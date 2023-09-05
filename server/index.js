@@ -14,7 +14,9 @@ import executableSchema from './src/schema.js';
 import { connectToDb } from './src/db.js';
 
 // Connect to your database
-connectToDb(); 
+connectToDb();
+
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173', 'https://galore.club', 'https://galore-headless-test-beejathon.vercel.app'];
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -28,10 +30,23 @@ const server = new ApolloServer({
   },
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
+
 await server.start();
 
 app.use(
-  cors(),
+  cors({
+      origin: function(origin, callback){
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
+          const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+          return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+      },
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
+      optionsSuccessStatus: 204,
+  }),
   bodyParser.json(),
   graphqlUploadExpress(), // Add this middleware to handle file uploads
   expressMiddleware(server),

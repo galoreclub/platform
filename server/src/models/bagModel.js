@@ -22,7 +22,7 @@ const bagSchema = new mongoose.Schema({
     require: false,
   },
   model: {
-    type: Number,
+    type: String,
     required: false,
   },
   // No price now
