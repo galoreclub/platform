@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'TheSeasons';
+    src: url(./assets/fonts/Fontspring-DEMO-theseasons-reg.otf)
+      format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Helvetica';
+    src: url(./assets/fonts/Helvetica.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Helvetica-Bold';
+    src: url(./assets/fonts/Helvetica-Bold.ttf) format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Tenor Sans';
+    src: url(./assets/fonts/TenorSans-Regular.ttf) format('truetupe');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+:root {
+  font-family: Helvetica, Inter, system-ui, Avenir, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
