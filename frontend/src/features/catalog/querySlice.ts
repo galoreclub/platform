@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice, current } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { addFilter, removeFilter } from './catalogSlice'
 
 export interface QueryState {
@@ -30,7 +30,6 @@ export const querySlice = createSlice({
     builder
       .addCase(addFilter, (state, action) => {
         state.queryBuilder.push(action.payload.value)
-        console.log(current(state.queryBuilder))
       })
       .addCase(removeFilter, (state, action) => {
         state.queryBuilder = state.queryBuilder.filter(

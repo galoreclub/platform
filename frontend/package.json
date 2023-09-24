@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.1",
+    "@headlessui/react": "^1.7.17",
     "@reduxjs/toolkit": "^1.9.5",
     "@shopify/hydrogen-react": "^2023.7.1",
     "apollo-upload-client": "^17.0.0",
@@ -24,6 +25,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/apollo-upload-client": "^17.0.3",
     "@types/dompurify": "^3.0.2",
     "@types/node": "^20.4.10",
     "@types/react": "^18.2.14",

@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { useMutation } from '@apollo/client'
 import { CUSTOMER_LOGIN } from '../../app/graphql/mutations'
 import { authSuccess } from './authSlice'
+import { LoadingPage } from '../../components/Loading'
 
 export const SignInForm = ({ toggle, setNewUser }: any) => {
   const [type, setType] = useState('password')
@@ -12,7 +13,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
   const errRef = useRef<HTMLDivElement>(null)
   const [errMsg, setErrMsg] = useState('')
   const dispatch = useAppDispatch()
-  const [submitSignIn, { data, loading, error }] = useMutation(CUSTOMER_LOGIN)
+  const [submitSignIn, { data, loading }] = useMutation(CUSTOMER_LOGIN)
 
   const handleToggle = (e: any) => {
     e.preventDefault()
@@ -25,23 +26,22 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data?.customerAccessTokenCreate.customerAccessToken) {
       dispatch(
         authSuccess({
           ...data.customerAccessTokenCreate.customerAccessToken,
         })
       )
-    } else if (error) {
-      setErrMsg(error.message)
+    } else if (data?.customerAccessTokenCreate.customerUserErrors.length > 0) {
+      setErrMsg(data.customerAccessTokenCreate.customerUserErrors[0].message)
       errRef.current?.focus()
     } else {
       emailRef.current?.focus()
     }
-    console.log(process.env.VITE_PUBLIC_STOREFRONT_TOKEN)
-  }, [data, error])
+  }, [data])
 
   if (loading) {
-    console.log('loading...')
+    return <LoadingPage />
   }
 
   return (
@@ -179,6 +179,7 @@ export const SignInForm = ({ toggle, setNewUser }: any) => {
           <span className="w-full border-b-[2px] border-solid border-black"></span>
         </div>
         <div className="m-4 flex flex-col items-center gap-4 text-sm">
+          {/* Social logins not possible without multipass or app extension */}
           <a href="#">CONTINUE WITH FACEBOOK</a>
           <a href="#">CONTINUE WITH GOOGLE</a>
         </div>

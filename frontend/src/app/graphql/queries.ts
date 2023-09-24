@@ -21,7 +21,7 @@ export const GET_PRODUCTS = gql`
           title
           vendor
           featuredImage {
-            originalSrc
+            url
             altText
           }
           priceRange {

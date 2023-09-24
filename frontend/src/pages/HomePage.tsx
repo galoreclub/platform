@@ -5,9 +5,13 @@ import homeImg2 from '../assets/home-2.png'
 import homeImg3 from '../assets/home-3.png'
 import { AuthModal } from '../features/auth/AuthModal'
 import { Link } from 'react-router-dom'
-import { AddBagForm } from '../features/auth/CreateBagForm'
+import { useEffect } from 'react'
 
-export const Home = (): React.ReactElement => {
+export const HomePage = (): React.ReactElement => {
+  useEffect(() => {
+    console.log(import.meta.env.PUBLIC_STOREFRONT_TOKEN)
+  }, [])
+
   return (
     <>
       <HeroSection />

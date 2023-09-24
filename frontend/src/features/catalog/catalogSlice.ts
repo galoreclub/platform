@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CatalogState {
   openMenus: any[]
-  products: any[]
   vendors: any[]
   productFilters: any[]
   query: any[]
@@ -12,7 +11,6 @@ export interface CatalogState {
 
 const initialState: CatalogState = {
   openMenus: [],
-  products: [],
   vendors: [],
   productFilters: [],
   query: [],
@@ -24,9 +22,6 @@ const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
   reducers: {
-    loadProducts: (state, action: PayloadAction<any>) => {
-      state.products = action.payload
-    },
     loadVendors: (state, action: PayloadAction<any>) => {
       state.vendors = action.payload
     },
@@ -53,12 +48,7 @@ const catalogSlice = createSlice({
   },
 })
 
-export const {
-  loadProducts,
-  loadVendors,
-  addFilter,
-  removeFilter,
-  toggleMenu,
-} = catalogSlice.actions
+export const { loadVendors, addFilter, removeFilter, toggleMenu } =
+  catalogSlice.actions
 
 export default catalogSlice.reducer

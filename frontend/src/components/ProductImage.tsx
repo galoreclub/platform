@@ -10,9 +10,7 @@ export default function ProductImage({ product }: { product: Product }) {
   return (
     <Image
       data={product.featuredImage}
-      sizes="(min-width: 45em) 50vw, 100vw"
-      aspectRatio="4/5"
-      className="object-contain"
+      className="h-auto max-w-full object-contain"
     />
   )
 }

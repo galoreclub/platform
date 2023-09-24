@@ -1,15 +1,19 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { TextInput } from '../../components/TextInput'
-import { Dialog } from '../../components/Dialog'
-import { useState } from 'react'
+import { DialogModal, useDialog } from '../../components/DialogModal'
 import { PasswordInput } from '../../components/PasswordInput'
 
 export const ActivateForm = () => {
-  const [showDialog, setShowDialog] = useState(false)
+  const { isOpen, openDialog, closeDialog } = useDialog()
 
   return (
     <>
+      <DialogModal
+        open={isOpen}
+        onClose={closeDialog}
+        message="Your account has been successfully activated. Please log in."
+      />
       <Formik
         initialValues={{
           email: '',
@@ -36,7 +40,7 @@ export const ActivateForm = () => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
-            setShowDialog(true)
+            openDialog()
           }, 400)
         }}
       >
@@ -63,11 +67,6 @@ export const ActivateForm = () => {
           </button>
         </Form>
       </Formik>
-      <Dialog
-        showDialog={showDialog}
-        setShowDialog={() => setShowDialog(false)}
-        message="Your account has been successfully activated. Please log in."
-      />
     </>
   )
 }

@@ -1,19 +1,29 @@
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Outlet } from 'react-router-dom'
-import { useAppSelector } from '../app/hooks'
+import { CartProvider } from '@shopify/hydrogen-react'
 
-const Root = (): React.ReactElement => {
-  const user = useAppSelector((state) => state.auth.user)
-
+const Root = () => {
   return (
-    <>
-      <Header />
-      <main id="main" className="mb-auto flex flex-col justify-start">
-        <Outlet />
-      </main>
-      <Footer />
-    </>
+    <div className="m-auto flex w-screen max-w-screen-2xl flex-col">
+      <CartProvider
+        onLineAdd={() => {
+          console.log('a line is being added')
+        }}
+        onLineAddComplete={() => {
+          console.log('a line has been added')
+        }}
+      >
+        <Header />
+        <main
+          id="main"
+          className="mb-auto flex w-screen flex-col justify-start"
+        >
+          <Outlet />
+        </main>
+        <Footer />
+      </CartProvider>
+    </div>
   )
 }
 
