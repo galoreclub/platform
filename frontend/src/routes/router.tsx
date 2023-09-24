@@ -11,6 +11,8 @@ import { CartPage } from '../features/cart/CartPage.tsx'
 import { CatalogPage } from '../pages/CatalogPage.tsx'
 import { Rent } from '../pages/Rent.tsx'
 import { WhoWeAre } from '../pages/WhoWeAre.tsx'
+import BagList from '../pages/NewBagReview.tsx'
+import { AddBagForm } from '../features/auth/CreateBagForm.jsx'
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +70,16 @@ export const router = createBrowserRouter([
       {
         path: '/who-we-are',
         element: <WhoWeAre />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/bagsReview',
+        element: <BagList />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/addNewBag',
+        element: <AddBagForm />,
         errorElement: <ErrorPage />,
       },
     ],

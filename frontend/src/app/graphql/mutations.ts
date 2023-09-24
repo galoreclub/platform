@@ -91,3 +91,25 @@ export const CUSTOMER_ADDRESS_CREATE = gql`
     }
   }
 `
+
+export const TRIGGER_PIPEDREAM_EVENT = gql`
+  mutation TriggerPipedreamEvent($_id: String!) {
+    triggerPipedreamEvent(_id: $_id) {
+      id
+      success
+      message
+    }
+  }
+`;
+export const ADD_BAG = gql`
+  mutation AddBag($brand: String!, $size: String!, $condition: String!, $serialNum: String!, $material: String!, $model: String!,  $images: [Upload!]) {
+    addBag(brand: $brand, size: $size, condition: $condition, serialNum: $serialNum, material: $material, model: $model, images: $images) {
+      brand
+      size
+      condition
+      serialNum
+      material
+      model
+    }
+  }
+`
