@@ -27,6 +27,7 @@ const bagTypeDefs = `
     material: String!
     model: String!
     images: [Image]
+    confirmationNum: Int!
   }
 
   type Query {
@@ -50,14 +51,16 @@ const bagResolvers = {
         return bags.map((bag) => ({
           _id: bag._id.toString(),
           ...bag._doc,
-          images: bag.images ? bag.images.map((image) => ({
-            data: image.toString('base64'), // Convert Buffer to base64 string
-            mimetype: 'image/jpeg', // This is just an example. In a real scenario, you'd determine the mime type based on the image or store it in the database.
-          })) : [],
+          images: bag.images
+            ? bag.images.map((image) => ({
+                data: image.toString('base64'), // Convert Buffer to base64 string
+                mimetype: 'image/jpeg', // This is just an example. In a real scenario, you'd determine the mime type based on the image or store it in the database.
+              }))
+            : [],
         }));
       } catch (error) {
-        console.error("Database error:", error);
-        throw new Error("Unable to fetch bags");
+        console.error('Database error:', error);
+        throw new Error('Unable to fetch bags');
       }
     },
   },
@@ -92,7 +95,28 @@ const bagResolvers = {
           images: imageBuffers, // Storing the image as a buffer
         });
         await newBag.save();
-        return newBag;
+        const maxAttempts = 5;
+        const delayBetweenAttempts = 1000;
+        let newBagAdded;
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+          // Wait for the specified delay time before fetching
+          await new Promise((resolve) =>
+            setTimeout(resolve, delayBetweenAttempts)
+          );
+          newBagAdded = await Bag.findById(newBag._id);
+          console.log(newBagAdded);
+
+          // Check if the confirmation number has been added, if yes, return the bag
+          if (newBagAdded && newBagAdded.confirmationNum) {
+            console.log(
+              'Confirmation number found:',
+              newBagAdded.confirmationNum
+            );
+            return newBagAdded;
+          }
+        }
+        console.log('Confirmation number not available after several attempts');
+        return newBagAdded;
       } catch (error) {
         console.error('Error adding bag:', error);
         throw new Error('Failed to add bag');
@@ -117,9 +141,9 @@ const bagResolvers = {
         const pipedreamEndpoint = process.env.PIPEDREAM_ENDPOINT;
         const payload = _id;
         const config = {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(payload),
         };
@@ -129,26 +153,28 @@ const bagResolvers = {
         if (response.ok) {
           const data = await response.json();
           return {
-            id: data.id || "Unknown ID",
+            id: data.id || 'Unknown ID',
             success: true,
-            message: "Successfully triggered Pipedream event",
+            message: 'Successfully triggered Pipedream event',
           };
         } else {
           return {
-            id: "Unknown ID",
+            id: 'Unknown ID',
             success: false,
             message: `Failed to trigger Pipedream event, status code: ${response.status}`,
           };
         }
       } catch (error) {
-        console.error(`An error occurred while sending the trigger to Pipedream: ${error}`);
+        console.error(
+          `An error occurred while sending the trigger to Pipedream: ${error}`
+        );
         return {
-          id: "Unknown ID",
+          id: 'Unknown ID',
           success: false,
           message: `An error occurred: ${error.message}`,
         };
       }
-    }
+    },
   },
 };
 

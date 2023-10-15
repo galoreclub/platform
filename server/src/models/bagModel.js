@@ -29,7 +29,11 @@ const bagSchema = new mongoose.Schema({
   images: [{
     type: Buffer,
     required: false,
-  }]
+  }],
+  confirmationNum: {
+    type: Number,
+    required: false, // or true, depending on your use case
+  },
 });
 
 export default mongoose.model('Bag', bagSchema);

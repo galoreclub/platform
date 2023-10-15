@@ -110,6 +110,7 @@ export const ADD_BAG = gql`
       serialNum
       material
       model
+      confirmationNum
     }
   }
 `

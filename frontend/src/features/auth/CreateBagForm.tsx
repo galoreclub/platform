@@ -14,6 +14,10 @@ export const AddBagForm = () => {
     console.log(error.message)
   }
 
+  if (data) {
+    console.log(`Confirmation number: ${data?.addBag?.confirmationNum}`);
+  }
+
   return (
       <div className="m-auto flex flex-col gap-6 p-6 py-6 md:w-10/12 lg:w-6/12 lg:gap-20 lg:p-10 xl:w-4/12">
         <h1 className="flex items-center justify-center font-helvetica-bold text-2xl uppercase lg:text-4xl">
