@@ -9,3 +9,4 @@ describe("/testNode endpoint",  () => {
             expect(response.text).toBe('Yes the testNode endpoint worked');
    });
 });
+
